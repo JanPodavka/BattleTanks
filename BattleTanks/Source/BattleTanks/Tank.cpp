@@ -2,4 +2,31 @@
 
 
 #include "Tank.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+
+ATank::ATank()
+{
+	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>("Spring Arm Component");
+	SpringArmComp->SetupAttachment(RootComponent);
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
+	CameraComponent->SetupAttachment(SpringArmComp);
+}
+
+
+// Called to bind funcionality to input
+void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis("MoveForward", this, &ATank::Move);
+}
+
+
+void ATank::Move(float Value)
+{
+UE_LOG(LogTemp, Display, TEXT("pressed: %f"), Value);
+	
+}
+
+
 
